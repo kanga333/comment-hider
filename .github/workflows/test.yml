@@ -21,3 +21,19 @@ jobs:
     - uses: ./
       with: 
         milliseconds: 1000
+  comment-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/github-script@0.9.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const output = `
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+  
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
