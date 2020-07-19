@@ -505,7 +505,10 @@ function run() {
         try {
             const token = core.getInput('github_token');
             const cli = new client_1.Client(token);
-            yield cli.ListComments();
+            const ids = yield cli.ListComments();
+            for (const id of ids) {
+                yield cli.HideComment(id, 'OUTDATED');
+            }
         }
         catch (error) {
             core.setFailed(error.message);
@@ -4289,7 +4292,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // TODO: List Comment 手続き型
 // TODO: Hide Comment 手続き型
 // TODO: Refactor
-const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
 class Client {
     constructor(githubToken) {
@@ -4305,8 +4307,26 @@ class Client {
                 repo: this.repo,
                 issue_number: this.issueNumber
             });
+            const ids = [];
             for (const r of resp.data) {
-                core.info(`${JSON.stringify(r)}`);
+                ids.push(r.node_id);
+            }
+            return new Promise(resolve => resolve(ids));
+        });
+    }
+    HideComment(nodeID, reason) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const resp = yield this.octokit.graphql(`
+      mutation {
+        minimizeComment(input: {classifier: ${reason}, subjectId: "${nodeID}"}) {
+          minimizedComment {
+            isMinimized
+          }
+        }
+      }
+    `);
+            if (resp.errors) {
+                throw new Error(`${resp.errors[0].message}`);
             }
         });
     }
