@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
-// TODO: List Comment 手続き型
-// TODO: Hide Comment 手続き型
-// TODO: Refactor
 import * as github from '@actions/github'
 
 import {GitHub} from '@actions/github/lib/utils'
@@ -26,11 +23,17 @@ export class Client {
   repo: string
   issueNumber: number
 
-  constructor(githubToken: string) {
+  constructor(
+    githubToken: string,
+    owner?: string,
+    repo?: string,
+    issueNumber?: number
+  ) {
     this.octokit = github.getOctokit(githubToken)
-    this.owner = 'kanga333' //TODO: `github.context.repo.owner` オプション引数でなかったら自動設定
-    this.repo = 'comment-hider' //TODO: `github.context.repo.repo` オプション引数でなかったら自動設定
-    this.issueNumber = 1
+    this.owner = owner !== undefined ? owner : github.context.repo.owner
+    this.repo = repo !== undefined ? repo : github.context.repo.repo
+    this.issueNumber =
+      issueNumber !== undefined ? issueNumber : github.context.issue.number
   }
 
   async ListComments(): Promise<string[]> {

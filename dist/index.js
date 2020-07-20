@@ -504,7 +504,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const token = core.getInput('github_token');
-            const cli = new client_1.Client(token);
+            const cli = new client_1.Client(token, 'kanga333', 'comment-hider', 1);
             const ids = yield cli.ListComments();
             for (const id of ids) {
                 yield cli.HideComment(id, 'OUTDATED');
@@ -4289,16 +4289,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// TODO: List Comment 手続き型
-// TODO: Hide Comment 手続き型
-// TODO: Refactor
 const github = __importStar(__webpack_require__(469));
 class Client {
-    constructor(githubToken) {
+    constructor(githubToken, owner, repo, issueNumber) {
         this.octokit = github.getOctokit(githubToken);
-        this.owner = 'kanga333'; //TODO: `github.context.repo.owner` オプション引数でなかったら自動設定
-        this.repo = 'comment-hider'; //TODO: `github.context.repo.repo` オプション引数でなかったら自動設定
-        this.issueNumber = 1;
+        this.owner = owner !== undefined ? owner : github.context.repo.owner;
+        this.repo = repo !== undefined ? repo : github.context.repo.repo;
+        this.issueNumber = issueNumber !== undefined ? issueNumber : github.context.issue.number;
     }
     ListComments() {
         return __awaiter(this, void 0, void 0, function* () {
