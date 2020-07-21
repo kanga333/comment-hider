@@ -505,7 +505,7 @@ function run() {
         try {
             const token = core.getInput('github_token');
             const cli = new client_1.Client(token, 'kanga333', 'comment-hider', 1);
-            const ids = yield cli.ListComments();
+            const ids = yield cli.SelectComments('github-actions[bot]');
             for (const id of ids) {
                 yield cli.HideComment(id, 'OUTDATED');
             }
@@ -4295,9 +4295,10 @@ class Client {
         this.octokit = github.getOctokit(githubToken);
         this.owner = owner !== undefined ? owner : github.context.repo.owner;
         this.repo = repo !== undefined ? repo : github.context.repo.repo;
-        this.issueNumber = issueNumber !== undefined ? issueNumber : github.context.issue.number;
+        this.issueNumber =
+            issueNumber !== undefined ? issueNumber : github.context.issue.number;
     }
-    ListComments() {
+    SelectComments(userName) {
         return __awaiter(this, void 0, void 0, function* () {
             const resp = yield this.octokit.issues.listComments({
                 owner: this.owner,
@@ -4306,6 +4307,9 @@ class Client {
             });
             const ids = [];
             for (const r of resp.data) {
+                if (r.user.login !== userName) {
+                    continue;
+                }
                 ids.push(r.node_id);
             }
             return new Promise(resolve => resolve(ids));

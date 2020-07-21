@@ -36,7 +36,7 @@ export class Client {
       issueNumber !== undefined ? issueNumber : github.context.issue.number
   }
 
-  async ListComments(): Promise<string[]> {
+  async SelectComments(userName: string): Promise<string[]> {
     const resp = await this.octokit.issues.listComments({
       owner: this.owner,
       repo: this.repo,
@@ -45,6 +45,9 @@ export class Client {
 
     const ids: string[] = []
     for (const r of resp.data) {
+      if (r.user.login !== userName) {
+        continue
+      }
       ids.push(r.node_id)
     }
     return new Promise<string[]>(resolve => resolve(ids))
