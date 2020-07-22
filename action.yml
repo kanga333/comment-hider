@@ -5,6 +5,14 @@ inputs:
   github_token:
     description: 'github token'
     required: true
+  hide_user_name:
+    description: ''
+    default: 'github-actions[bot]'
+    required: false
+  hide_reason:
+    description: ''
+    default: 'OUTDATED'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

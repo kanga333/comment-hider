@@ -504,10 +504,12 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const token = core.getInput('github_token');
-            const cli = new client_1.Client(token, 'kanga333', 'comment-hider', 1);
-            const ids = yield cli.SelectComments('github-actions[bot]');
+            const userName = core.getInput('hide_user_name');
+            const reason = core.getInput('hide_reason');
+            const cli = new client_1.Client(token);
+            const ids = yield cli.SelectComments(userName);
             for (const id of ids) {
-                yield cli.HideComment(id, 'OUTDATED');
+                yield cli.HideComment(id, reason);
             }
         }
         catch (error) {
