@@ -1,16 +1,16 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'comment-hider'
+description: 'Github Action to hide Bot comments'
+author: 'kanga333'
 inputs:
   github_token:
-    description: 'github token'
+    description: 'The GitHub token used to create an authenticated client'
     required: true
   hide_user_name:
-    description: ''
+    description: 'Github username to hide comments'
     default: 'github-actions[bot]'
     required: false
   hide_reason:
-    description: ''
+    description: 'Reasons to hide comments'
     default: 'OUTDATED'
     required: false
 runs:

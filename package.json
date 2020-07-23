@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "comment-hider",
+  "version": "0.0.1",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Github Action to hide Bot comments",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -19,10 +19,10 @@
   },
   "keywords": [
     "actions",
-    "node",
-    "setup"
+    "hide",
+    "comment"
   ],
-  "author": "YourNameOrOrganization",
+  "author": "kanga333",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.0",
