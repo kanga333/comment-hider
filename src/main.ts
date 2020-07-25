@@ -1,16 +1,17 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {Client} from './client'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    const token: string = core.getInput('github_token')
+    const userName: string = core.getInput('hide_user_name')
+    const reason: string = core.getInput('hide_reason')
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
+    const cli = new Client(token)
+    const ids = await cli.SelectComments(userName)
+    for (const id of ids) {
+      await cli.HideComment(id, reason)
+    }
   } catch (error) {
     core.setFailed(error.message)
   }

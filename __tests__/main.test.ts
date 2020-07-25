@@ -1,27 +1,22 @@
-import {wait} from '../src/wait'
-import * as process from 'process'
-import * as cp from 'child_process'
+import {Client} from '../src/client'
+import listComment from './list_comment.json'
 import * as path from 'path'
+import nock from 'nock'
 
-test('throws invalid number', async () => {
-  const input = parseInt('foo', 10)
-  await expect(wait(input)).rejects.toThrow('milliseconds not a number')
-})
+describe('Hide Comments', () => {
+  beforeEach(() => {
+    nock.cleanAll()
+    process.env.GITHUB_EVENT_PATH = path.join(__dirname, 'payload.json')
+  })
 
-test('wait 500 ms', async () => {
-  const start = new Date()
-  await wait(500)
-  const end = new Date()
-  var delta = Math.abs(end.getTime() - start.getTime())
-  expect(delta).toBeGreaterThan(450)
-})
+  it('should only select the bot comment id', async () => {
+    const client = new Client('secrets', 'owner', 'repo', 1)
+    const github = nock('https://api.github.com')
+      .get(`/repos/owner/repo/issues/1/comments`)
+      .reply(200, listComment)
 
-// shows how the runner will run a javascript action with env / stdout protocol
-test('test runs', () => {
-  process.env['INPUT_MILLISECONDS'] = '500'
-  const ip = path.join(__dirname, '..', 'lib', 'main.js')
-  const options: cp.ExecSyncOptions = {
-    env: process.env
-  }
-  console.log(cp.execSync(`node ${ip}`, options).toString())
+    const response = await client.SelectComments(`bot`)
+
+    expect(response).toStrictEqual(['hide me'])
+  })
 })

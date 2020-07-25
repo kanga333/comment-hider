@@ -1,10 +1,21 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'comment-hider'
+description: 'Github Action to hide Bot comments'
+branding:
+  color: gray-dark
+  icon: check
+author: 'kanga333'
 inputs:
-  milliseconds:           # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  github_token:
+    description: 'The GitHub token used to create an authenticated client'
+    required: true
+  hide_user_name:
+    description: 'Github username to hide comments'
+    default: 'github-actions[bot]'
+    required: false
+  hide_reason:
+    description: 'Reasons to hide comments'
+    default: 'OUTDATED'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

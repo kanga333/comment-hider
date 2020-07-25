@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "node_id": "not hide me",
+        "user": {
+            "login": "user"
+        }
+    },
+    {
+        "id": 2,
+        "node_id": "hide me",
+        "user": {
+            "login": "bot"
+        }
+    }
+]
