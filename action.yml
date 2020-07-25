@@ -1,5 +1,8 @@
 name: 'comment-hider'
 description: 'Github Action to hide Bot comments'
+branding:
+  color: gray-dark
+  icon: check
 author: 'kanga333'
 inputs:
   github_token:
