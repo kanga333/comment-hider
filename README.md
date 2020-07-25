@@ -1,5 +1,7 @@
 # Github Action to hide Bot comments
 
+![build-test](https://github.com/kanga333/comment-hider/workflows/build-test/badge.svg)
+
 Comment-hider action automatically hides bot comments posted to PR.
 
 - Automatically hide certain users' comments posted to PR. (The default is `github-actions[bot]`.)
