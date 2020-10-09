@@ -1,6 +1,6 @@
 {
   "name": "comment-hider",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "private": true,
   "description": "Github Action to hide Bot comments",
   "main": "lib/main.js",
