@@ -16,7 +16,7 @@ on:
 steps:
 - uses: actions/checkout@v2
 
-- uses: kanga333/kanga333/comment-hider@master
+- uses: kanga333/comment-hider@master
   name: Hide bot comments
   with: 
     github_token: ${{ secrets.GITHUB_TOKEN }}
