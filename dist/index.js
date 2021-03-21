@@ -568,9 +568,10 @@ function run() {
             const token = core.getInput('github_token');
             const userName = core.getInput('hide_user_name');
             const reason = core.getInput('hide_reason');
+            const nbOfCommentsToLeave = parseInt(core.getInput('leave_visible'), 10);
             const cli = new client_1.Client(token);
             const ids = yield cli.SelectComments(userName);
-            for (const id of ids) {
+            for (const id of ids.splice(-1, nbOfCommentsToLeave)) {
                 yield cli.HideComment(id, reason);
             }
         }
