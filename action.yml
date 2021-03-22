@@ -18,7 +18,7 @@ inputs:
     required: false
   leave_visible:
     description: 'The number of most recent comments to leave untouched'
-    default: '1'
+    default: '0'
     required: false
 runs:
   using: 'node12'

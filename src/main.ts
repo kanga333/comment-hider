@@ -10,7 +10,7 @@ async function run(): Promise<void> {
 
     const cli = new Client(token)
     const ids = await cli.SelectComments(userName)
-    for (const id of ids.splice(-1, nbOfCommentsToLeave)) {
+    for (const id of ids.splice(-nbOfCommentsToLeave, nbOfCommentsToLeave)) {
       await cli.HideComment(id, reason)
     }
   } catch (error) {
