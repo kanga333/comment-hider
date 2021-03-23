@@ -571,7 +571,7 @@ function run() {
             const nbOfCommentsToLeave = parseInt(core.getInput('leave_visible'), 10);
             const cli = new client_1.Client(token);
             const ids = yield cli.SelectComments(userName);
-            for (const id of ids.splice(-1, nbOfCommentsToLeave)) {
+            for (const id of ids.splice(-nbOfCommentsToLeave, nbOfCommentsToLeave)) {
                 yield cli.HideComment(id, reason);
             }
         }
