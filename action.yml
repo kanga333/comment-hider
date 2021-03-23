@@ -9,12 +9,16 @@ inputs:
     description: 'The GitHub token used to create an authenticated client'
     required: true
   hide_user_name:
-    description: 'Github username to hide comments'
+    description: 'GitHub username to hide comments'
     default: 'github-actions[bot]'
     required: false
   hide_reason:
     description: 'Reasons to hide comments'
     default: 'OUTDATED'
+    required: false
+  leave_visible:
+    description: 'The number of most recent comments to leave untouched'
+    default: '0'
     required: false
 runs:
   using: 'node12'
