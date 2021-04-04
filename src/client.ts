@@ -45,7 +45,7 @@ export class Client {
 
     const ids: string[] = []
     for (const r of resp.data) {
-      if (r.user.login !== userName) {
+      if (r.user != undefined && r.user.login !== userName) {
         continue
       }
       ids.push(r.node_id)
