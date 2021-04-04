@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
 import * as github from '@actions/github'
 
 import {GitHub} from '@actions/github/lib/utils'
@@ -45,7 +43,7 @@ export class Client {
 
     const ids: string[] = []
     for (const r of resp.data) {
-      if (r.user.login !== userName) {
+      if (r.user !== null && r.user.login !== userName) {
         continue
       }
       ids.push(r.node_id)
