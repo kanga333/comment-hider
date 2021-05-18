@@ -10,7 +10,7 @@ describe('Hide Comments', () => {
   })
 
   it('should only select the bot comment id', async () => {
-    const client = new Client('secrets', 'owner', 'repo', 1)
+    const client = new Client('secrets', 1, 'owner', 'repo')
     const github = nock('https://api.github.com')
       .get(`/repos/owner/repo/issues/1/comments`)
       .reply(200, listComment)

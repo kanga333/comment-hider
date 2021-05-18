@@ -20,6 +20,10 @@ inputs:
     description: 'The number of most recent comments to leave untouched'
     default: '0'
     required: false
+  issue_number:
+    description: 'Issue number, needed when running with workflow_run trigger'
+    default: ''
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

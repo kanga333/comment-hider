@@ -17,21 +17,21 @@ interface HideResponse {
 
 export class Client {
   octokit: InstanceType<typeof GitHub>
+  issueNumber: number
   owner: string
   repo: string
-  issueNumber: number
 
   constructor(
     githubToken: string,
+    issueNumber?: number,
     owner?: string,
-    repo?: string,
-    issueNumber?: number
+    repo?: string
   ) {
     this.octokit = github.getOctokit(githubToken)
-    this.owner = owner !== undefined ? owner : github.context.repo.owner
-    this.repo = repo !== undefined ? repo : github.context.repo.repo
     this.issueNumber =
       issueNumber !== undefined ? issueNumber : github.context.issue.number
+    this.owner = owner !== undefined ? owner : github.context.repo.owner
+    this.repo = repo !== undefined ? repo : github.context.repo.repo
   }
 
   async SelectComments(userName: string): Promise<string[]> {
