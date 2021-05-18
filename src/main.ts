@@ -10,7 +10,7 @@ async function run(): Promise<void> {
     const nbOfCommentsToLeave: number = parseInt(core.getInput('leave_visible'), 10)
 
     const issueNumber =
-      issueNumberAsString === "" ? undefined : parseInt(issueNumber, 10);
+      issueNumberAsString === "" ? undefined : parseInt(issueNumberAsString, 10);
     console.log({issueNumberAsString, issueNumber});
 
     const cli = new Client(token, issueNumber)
