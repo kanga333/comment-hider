@@ -11,7 +11,6 @@ async function run(): Promise<void> {
 
     const issueNumber =
       issueNumberAsString === "" ? undefined : parseInt(issueNumberAsString, 10);
-    console.log({issueNumberAsString, issueNumber});
 
     const cli = new Client(token, issueNumber)
     const ids = await cli.SelectComments(userName)
