@@ -19,7 +19,7 @@ async function run(): Promise<void> {
       await cli.HideComment(id, reason)
     }
   } catch (error) {
-    // TODO: more verbose messages than "Error: Not Found" (#27)
+    // TODO: more verbose messages than "Error: Not Found" (#29)
     core.setFailed(error.message)
   }
 }
