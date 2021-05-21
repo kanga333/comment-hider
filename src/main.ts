@@ -19,8 +19,7 @@ async function run(): Promise<void> {
       await cli.HideComment(id, reason)
     }
   } catch (error) {
-    // TODO: more verbose messages than "Error: Not Found"
-    // https://github.com/python/typeshed/pull/5478#issuecomment-842525709
+    // TODO: more verbose messages than "Error: Not Found" (#27)
     core.setFailed(error.message)
   }
 }
