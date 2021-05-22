@@ -13,7 +13,7 @@ inputs:
     default: 'github-actions[bot]'
     required: false
   hide_reason:
-    description: 'Reasons to hide comments'
+    description: 'A value from https://docs.github.com/en/graphql/reference/enums#reportedcontentclassifiers'
     default: 'OUTDATED'
     required: false
   leave_visible:

@@ -18,8 +18,9 @@ steps:
 
 - uses: kanga333/comment-hider@master
   name: Hide bot comments
-  with: 
+  with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
+    # See action.yml for other options you can specify
 
 - id: cicd
   run: |
