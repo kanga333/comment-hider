@@ -35,7 +35,7 @@ export class Client {
   }
 
   async SelectComments(userName: string): Promise<string[]> {
-    const resp = await this.octokit.issues.listComments({
+    const resp = await this.octokit.rest.issues.listComments({
       owner: this.owner,
       repo: this.repo,
       issue_number: this.issueNumber
