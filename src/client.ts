@@ -35,19 +35,30 @@ export class Client {
   }
 
   async SelectComments(userName: string): Promise<string[]> {
-    const resp = await this.octokit.rest.issues.listComments({
-      owner: this.owner,
-      repo: this.repo,
-      issue_number: this.issueNumber
-    })
-
     const ids: string[] = []
-    for (const r of resp.data) {
-      if (r.user !== null && r.user.login !== userName) {
-        continue
+
+    // continually page through comments ...
+    for (let page = 1; true; page++) {
+      const resp = await this.octokit.rest.issues.listComments({
+        owner: this.owner,
+        repo: this.repo,
+        issue_number: this.issueNumber,
+        page: page
+      })
+
+      // ... until we've read them all
+      if (!resp.data || resp.data.length == 0) {
+        break
       }
-      ids.push(r.node_id)
+
+      for (const r of resp.data) {
+        if (r.user !== null && r.user.login !== userName) {
+          continue
+        }
+        ids.push(r.node_id)
+      }
     }
+
     return new Promise<string[]>(resolve => resolve(ids))
   }
 
