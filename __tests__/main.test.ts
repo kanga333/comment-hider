@@ -13,8 +13,10 @@ describe('Hide Comments', () => {
     const client = new Client('secrets', 1, 'owner', 'repo')
     const github = nock('https://api.github.com')
       .get(`/repos/owner/repo/issues/1/comments`)
+      .query(true)
       .reply(200, listComment)
       .get(`/repos/owner/repo/issues/1/comments`)
+      .query(true)
       .reply(200, [])
 
     const response = await client.SelectComments(`bot`)
@@ -27,9 +29,11 @@ describe('Hide Comments', () => {
     const numPages = 5
     const github = nock('https://api.github.com')
       .get(`/repos/owner/repo/issues/1/comments`)
+      .query(true)
       .times(numPages)
       .reply(200, listComment)
       .get(`/repos/owner/repo/issues/1/comments`)
+      .query(true)
       .reply(200, [])
 
     const response = await client.SelectComments(`bot`)

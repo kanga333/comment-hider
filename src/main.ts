@@ -16,6 +16,7 @@ async function run(): Promise<void> {
       issueNumberAsString === '' ? undefined : parseInt(issueNumberAsString, 10)
 
     const cli = new Client(token, issueNumber)
+
     const ids = await cli.SelectComments(userName)
     ids.splice(-nbOfCommentsToLeave, nbOfCommentsToLeave)
     for (const id of ids) {

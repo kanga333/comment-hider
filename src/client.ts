@@ -1,3 +1,4 @@
+import * as core from '@actions/core'
 import * as github from '@actions/github'
 
 import {GitHub} from '@actions/github/lib/utils'
@@ -38,18 +39,22 @@ export class Client {
     const ids: string[] = []
 
     // continually page through comments ...
-    for (let page = 1; true; page++) {
+    // 3k comments is an absurd amount, feels like a pretty decent default limit
+    const maxPages = 100
+    for (let page = 1; page <= maxPages; page++) {
       const resp = await this.octokit.rest.issues.listComments({
         owner: this.owner,
         repo: this.repo,
         issue_number: this.issueNumber,
-        page: page
+        page
       })
 
       // ... until we've read them all
-      if (!resp.data || resp.data.length == 0) {
+      if (!resp.data || resp.data.length === 0) {
         break
       }
+
+      core.debug(`page ${page} contained ${resp.data.length} entries`)
 
       for (const r of resp.data) {
         if (r.user !== null && r.user.login !== userName) {
