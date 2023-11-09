@@ -63,7 +63,6 @@ export class Client {
         ids.push(r.node_id)
       }
     }
-
     return new Promise<string[]>(resolve => resolve(ids))
   }
 
