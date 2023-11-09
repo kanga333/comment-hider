@@ -40,6 +40,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Client = void 0;
+const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 class Client {
     constructor(githubToken, issueNumber, owner, repo) {
@@ -51,17 +52,28 @@ class Client {
     }
     SelectComments(userName) {
         return __awaiter(this, void 0, void 0, function* () {
-            const resp = yield this.octokit.rest.issues.listComments({
-                owner: this.owner,
-                repo: this.repo,
-                issue_number: this.issueNumber
-            });
             const ids = [];
-            for (const r of resp.data) {
-                if (r.user !== null && r.user.login !== userName) {
-                    continue;
+            // continually page through comments ...
+            // 3k comments is an absurd amount, feels like a pretty decent default limit
+            const maxPages = 100;
+            for (let page = 1; page <= maxPages; page++) {
+                const resp = yield this.octokit.rest.issues.listComments({
+                    owner: this.owner,
+                    repo: this.repo,
+                    issue_number: this.issueNumber,
+                    page
+                });
+                // ... until we've read them all
+                if (!resp.data || resp.data.length === 0) {
+                    break;
                 }
-                ids.push(r.node_id);
+                core.debug(`page ${page} contained ${resp.data.length} entries`);
+                for (const r of resp.data) {
+                    if (r.user !== null && r.user.login !== userName) {
+                        continue;
+                    }
+                    ids.push(r.node_id);
+                }
             }
             return new Promise(resolve => resolve(ids));
         });
